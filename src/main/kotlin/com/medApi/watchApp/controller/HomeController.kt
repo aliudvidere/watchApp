@@ -18,7 +18,7 @@ class HomeController(
         model.addAttribute("title", "Home page")
         val countList = arrayListOf<Count>()
         for (person in Constants.personList){
-            val dir = "/Users/vladimirberman/Documents/vessels/watchApp/src/main/resources/static/Labeled/${person}/labeled"
+            val dir = "${Constants.imagePath}/${person}/labeled"
             val listFiles = File(dir).list()
             countList.add(Count(person, Optional.ofNullable(listFiles?.size).orElse(0)))
         }

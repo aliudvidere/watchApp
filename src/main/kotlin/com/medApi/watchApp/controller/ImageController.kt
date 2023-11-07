@@ -1,5 +1,6 @@
 package com.medApi.watchApp.controller
 
+import com.medApi.watchApp.model.Constants
 import com.medApi.watchApp.model.Image
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -20,7 +21,7 @@ class ImageController(
     @GetMapping(value = ["/person"])
     fun home(@RequestParam person: String, model: Model): String {
         model.addAttribute("title", "images $person")
-        val dir = "/Users/vladimirberman/Documents/vessels/watchApp/src/main/resources/static/Labeled/${person}/labeled"
+        val dir = "${Constants.imagePath}/${person}/labeled"
         val listFiles = File(dir).list()
         model.addAttribute("person", person)
         val listImages = arrayListOf<Image>()

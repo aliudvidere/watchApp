@@ -14,16 +14,16 @@
           <a th:text="'Downloaded ' + ${lastDownload} + ' files'"></a>
           <p/>
       </div>
+        <div>
+            <a th:href="'/'" class="btn btn-warning">Back</a>
+            <p/>
+        </div>
       <div class="col-lg-6 col-md-8 mx-auto">
           <div th:each="img: ${listImages}">
             <img th:src="@{'/Labeled/' + ${person} + '/labeled/' + ${img.getFileName()}}" width="750" height="750"/>
 <!--            <a th:text="${img.getFileName()} + ' : ' + ${img.getCreationDate()}"></a>-->
               <a th:text="${img.getFileName()}"></a>
             <p/>
-          </div>
-          <div>
-              <p/>
-              <a th:href="'/'" class="btn btn-warning">Back</a>
           </div>
       </div>
     </div>

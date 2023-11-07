@@ -4,4 +4,5 @@ import java.util.ArrayList
 
 object Constants {
     val personList: ArrayList<String> = arrayListOf("Aub", "Dima", "Salah", "Tamara", "Tigran")
+    val imagePath: String = "/home/aliud/IdeaProjects/watchApp/src/main/resources/static/Labeled"
 }
