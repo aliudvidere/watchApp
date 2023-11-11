@@ -19,7 +19,7 @@ class ImageController(
 ) {
 
     @GetMapping(value = ["/person"])
-    fun home(@RequestParam person: String, model: Model): String {
+    fun person(@RequestParam person: String, model: Model): String {
         model.addAttribute("title", "images $person")
         val dir = "${Constants.imagePath}/${person}/labeled"
         val listFiles = File(dir).list()
