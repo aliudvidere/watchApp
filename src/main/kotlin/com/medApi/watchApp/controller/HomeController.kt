@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import java.io.File
-import java.util.Optional
+import java.util.*
 
 
 @Controller
@@ -18,11 +18,17 @@ class HomeController(
         model.addAttribute("title", "Home page")
         val countList = arrayListOf<Count>()
         for (person in Constants.personList){
-            val dir = "/Users/vladimirberman/Documents/vessels/watchApp/src/main/resources/static/Labeled/${person}/labeled"
+            val dir = "${Constants.imagePath}/${person}/labeled"
             val listFiles = File(dir).list()
-            countList.add(Count(person, Optional.ofNullable(listFiles?.size).orElse(0)))
+            val count = Optional.ofNullable(listFiles?.size).orElse(0)
+            val tableClass = if (count == 0) "table-danger" else "table-light"
+            if (person == "TamaraSalamonovna")
+                countList.add(Count( "Tamara Salamonovna", count, tableClass))
+            else
+                countList.add(Count(person, count, tableClass))
         }
-        model.addAttribute("countList", countList)
+        model.addAttribute("countList", countList.sortedBy{-it.numberOfImages})
+        model.addAttribute("all", countList.sumOf { it.numberOfImages })
         return "home-page"
     }
 }

@@ -15,9 +15,9 @@
         <form action="/person" method="get" id="select-form"></form>
         <select name="person" form="select-form">
           <option value="Aub">Aub</option>
-          <option value="Dima">Dima</option>
+          <option value="Dmitry">Dmitry</option>
           <option value="Salah">Salah</option>
-          <option value="Tamara">Tamara</option>
+          <option value="TamaraSalamonovna">Tamara Salamonovna</option>
           <option value="Tigran">Tigran</option>
         </select>
         <p/><p/>
@@ -29,11 +29,17 @@
   <table class="table">
     <tr>
       <th>Name</th>
-      <th>Number of images</th>
+      <th>Number of labeled images</th>
     </tr>
-    <tr th:each="count : ${countList}">
-      <td th:text="${count.getPersonName()}"/>
-      <td th:text="${count.getNumberOfImages()}"/>
+    <div th:each="count : ${countList}">
+      <tr th:class = "${count.getTableClass()}">
+        <td th:text="${count.getPersonName()}"/>
+        <td th:text="${count.getNumberOfImages()}"/>
+      </tr>
+    </div>
+    <tr th:class = "table-success">
+      <td th:text="Labeled"/>
+      <td th:text="${all}"/>
     </tr>
   </table>
 </section>
