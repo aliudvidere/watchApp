@@ -16,7 +16,7 @@ class WebSecurityConfig {
             .build()
         val user2 = User.withDefaultPasswordEncoder()
             .username("SergeiPetrovich")
-            .password("okefmne32*k!")
+            .password("ihbfvubuhyfvb")
             .roles("USER")
             .build()
         return InMemoryUserDetailsManager(user1, user2)

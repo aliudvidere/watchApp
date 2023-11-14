@@ -5,6 +5,10 @@ plugins {
 	id 'io.spring.dependency-management' version '1.1.3'
 	id 'org.jetbrains.kotlin.jvm' version '1.8.22'
 	id 'org.jetbrains.kotlin.plugin.spring' version '1.8.22'
+	id("org.liquibase.gradle") version "2.2.0"
+	id("org.hibernate.orm") version "6.4.0.CR1"
+	id "org.jetbrains.kotlin.plugin.allopen" version "1.5.21"
+	id "org.jetbrains.kotlin.plugin.jpa" version "1.5.21"
 }
 
 group = 'com.droneApi'
@@ -21,7 +25,6 @@ repositories {
 ext {
 	set('springCloudVersion', "2022.0.4")
 }
-
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
@@ -36,7 +39,17 @@ dependencies {
 	runtimeOnly 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+	implementation 'org.springframework.data:spring-data-jpa:3.1.5'
 }
+
+dependencies {
+	liquibaseRuntime 'org.liquibase:liquibase-core:4.3.5'
+	liquibaseRuntime 'org.liquibase:liquibase-groovy-dsl:2.1.1'
+	liquibaseRuntime 'info.picocli:picocli:4.7.5'
+	liquibaseRuntime 'org.yaml:snakeyaml:1.33'
+	liquibaseRuntime 'org.postgresql:postgresql'
+}
+apply plugin: "org.liquibase.gradle"
 
 dependencyManagement {
 	imports {
@@ -51,6 +64,17 @@ tasks.withType(KotlinCompile) {
 	}
 }
 
-tasks.named('test') {
-	useJUnitPlatform()
+liquibase {
+	activities {
+		main {
+			changelogFile "src/main/resources/db/changelog/db.changelog-master.xml"
+			url "jdbc:postgresql://localhost:5459/postgres"
+			username "postgres"
+			password "1"
+		}
+	}
+}
+
+allOpen {
+	annotations("javax.persistence.Entity", "javax.persistence.MappedSuperclass", "javax.persistence.Embedabble")
 }
