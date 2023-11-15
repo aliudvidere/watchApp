@@ -4,15 +4,14 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="0" author="">
-
+    <changeSet id="1" author="Пожилой жмых">
+        <sqlFile path="./sql/create_person_table.sql"
+                 splitStatements="false"
+                 relativeToChangelogFile="true"/>
+        <rollback>
+            <sqlFile path="./sql/create_person_table_rollback.sql"
+            splitStatements="false"
+            relativeToChangelogFile="true"/>
+        </rollback>
     </changeSet>
-
-    <include file="changesets/addPersons.xml" relativeToChangelogFile="true"/>
-
-    <include file="changesets/insertPersons.xml" relativeToChangelogFile="true"/>
-
-    <include file="./changesets/addImages.xml" relativeToChangelogFile="true"/>
-
-
 </databaseChangeLog>

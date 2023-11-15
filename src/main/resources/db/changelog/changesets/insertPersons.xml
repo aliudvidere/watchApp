@@ -4,14 +4,12 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="0" author="Пожилой жмых">
-        <sql>
-            CREATE TABLE persons (
-                                     id int,
-                                     name varchar);
-        </sql>
+    <changeSet id="2" author="Пожилой жмых">
+        <loadData file="./csv/persons.csv" tableName="person" relativeToChangelogFile="true"/>
         <rollback>
-            DROP TABLE persons
+            <delete tableName="person">
+                <where> 5 >= id </where>
+            </delete>
         </rollback>
     </changeSet>
 </databaseChangeLog>

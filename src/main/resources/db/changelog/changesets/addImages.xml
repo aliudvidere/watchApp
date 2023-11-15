@@ -4,12 +4,14 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="1" author="Пожилой жмых">
-        <loadData file="./csv/persons.csv" tableName="persons" relativeToChangelogFile="true"/>
+    <changeSet id="3" author="Пожилой Жмых">
+        <sqlFile path="./sql/create_img_table.sql"
+                 splitStatements="false"
+                 relativeToChangelogFile="true"/>
         <rollback>
-            <delete tableName="persons">
-                <where> 5 >= id </where>
-            </delete>
+            <sqlFile path="./sql/create_img_table_rollback.sql"
+                     splitStatements="false"
+                     relativeToChangelogFile="true"/>
         </rollback>
     </changeSet>
 </databaseChangeLog>
