@@ -2,29 +2,43 @@ package com.medApi.watchApp
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.config.Customizer.withDefaults
+import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.core.userdetails.User
+import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.provisioning.InMemoryUserDetailsManager
+import org.springframework.security.web.SecurityFilterChain
 
 
 @Configuration
 class WebSecurityConfig {
     @Bean
-    fun userDetailsService(): InMemoryUserDetailsManager? {
-        val user1 = User.withDefaultPasswordEncoder()
-            .username("user1")
-            .password("oiev89o@ier")
+    fun userDetailsService(): UserDetailsService {
+        // ensure the passwords are encoded properly
+        val users = User.withDefaultPasswordEncoder()
+        val manager = InMemoryUserDetailsManager()
+        manager.createUser(users
+            .username("user")
+            .password("password")
             .roles("USER")
-            .build()
-        val user2 = User.withDefaultPasswordEncoder()
-            .username("SergeiPetrovich")
-            .password("ihbfvubuhyfvb")
-            .roles("USER")
-            .build()
-        val admin = User.withDefaultPasswordEncoder()
+            .build())
+        manager.createUser(users
             .username("admin")
-            .password("chlen")
-            .roles("ADMIN")
-            .build()
-        return InMemoryUserDetailsManager(user1, user2, admin)
+            .password("password")
+            .roles("USER", "ADMIN")
+            .build())
+        return manager
+    }
+
+    @Bean
+    fun apiFilterChain(http: HttpSecurity): SecurityFilterChain {
+        http
+            .securityMatcher("/service/**")
+            .authorizeHttpRequests { authorize ->
+                authorize
+                    .anyRequest().hasRole("ADMIN")
+            }
+            .httpBasic(withDefaults())
+        return http.build()
     }
 }
