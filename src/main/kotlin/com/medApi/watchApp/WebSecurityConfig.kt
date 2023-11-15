@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.provisioning.InMemoryUserDetailsManager
 
+
 @Configuration
 class WebSecurityConfig {
     @Bean
@@ -19,6 +20,11 @@ class WebSecurityConfig {
             .password("ihbfvubuhyfvb")
             .roles("USER")
             .build()
-        return InMemoryUserDetailsManager(user1, user2)
+        val admin = User.withDefaultPasswordEncoder()
+            .username("admin")
+            .password("chlen")
+            .roles("ADMIN")
+            .build()
+        return InMemoryUserDetailsManager(user1, user2, admin)
     }
 }
