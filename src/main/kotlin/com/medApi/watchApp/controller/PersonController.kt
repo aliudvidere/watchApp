@@ -4,6 +4,7 @@ import com.medApi.watchApp.model.Person
 import com.medApi.watchApp.service.PersonService
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
@@ -20,7 +21,7 @@ class PersonController(val personService: PersonService) {
         return personService.deletePerson(name)
     }
 
-    @GetMapping(value = ["/service/add-person"], produces = ["application/json"])
+    @PostMapping(value = ["/service/add-person"], produces = ["application/json"])
     fun addPerson(@RequestParam name: String): List<Person>{
         return personService.addPerson(name)
     }
