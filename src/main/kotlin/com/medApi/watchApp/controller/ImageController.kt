@@ -1,7 +1,7 @@
 package com.medApi.watchApp.controller
 
 import com.medApi.watchApp.model.Constants
-import com.medApi.watchApp.model.Image
+import com.medApi.watchApp.model.ImageDTO
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
@@ -24,8 +24,8 @@ class ImageController(
         val dir = "${Constants.imagePath}/${person}/labeled"
         val listFiles = File(dir).list()
         model.addAttribute("person", person)
-        val listImages = arrayListOf<Image>()
-        listFiles?.forEach {listImages.add(Image(it, Files.readAttributes(Paths.get("$dir/$it"), BasicFileAttributes::class.java).creationTime().toInstant().atZone(
+        val listImages = arrayListOf<ImageDTO>()
+        listFiles?.forEach {listImages.add(ImageDTO(it, Files.readAttributes(Paths.get("$dir/$it"), BasicFileAttributes::class.java).creationTime().toInstant().atZone(
             ZoneId.of("GMT+3")).format(DateTimeFormatter.ISO_LOCAL_DATE)))}
         model.addAttribute("listImages", listImages)
         var lastDate = "never"
